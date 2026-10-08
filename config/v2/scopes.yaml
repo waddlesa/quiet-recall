@@ -1,0 +1,40 @@
+schema_version: 1
+
+ordinary:
+  description: curated profile, daily events, and relationships
+  namespaces:
+    - personal.profile
+    - personal.daily
+    - relationship.shared
+
+vaults:
+  assistant.self:
+    description: assistant-authored continuity and chosen memories
+    namespaces: [assistant.self]
+    routing_cues: [your memory, your name, assistant memory, what you remember]
+  private.health:
+    description: private health history
+    namespaces: [private.health]
+    routing_subject: self
+    routing_cues: [allergy, diagnosis, medication, health history, hospital]
+  oc.character:
+    description: fictional character canon and shared story events
+    namespaces: [oc.character]
+    routing_cues: [Orion, original character, OC, character setting]
+
+candidate_policy:
+  dense_pool_k: 64
+  directory_k: 8
+  parent_cap: 3
+  evidence_floor:
+    lexical_min: 8.0
+    rerank_min: 0.5
+    vector_min: 0.60
+  strict_surface:
+    lexical_min: 8.0
+    rerank_min: 0.5
+    matched_cue_min: 2
+
+metadata_policy:
+  total_tokens: 200
+  directory_tokens: 140

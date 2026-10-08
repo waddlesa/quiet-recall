@@ -1,0 +1,58 @@
+schema_version: 1
+
+roots:
+  memory: examples/memory
+
+coverage:
+  mode: curated_tree
+  excluded_sources: []
+
+sources:
+  - id: navigation
+    path_glob: '**/index.md'
+    namespace: routing.index
+    role: routing_index
+    auto_recall: false
+    parse: false
+
+  - id: profile
+    path_glob: 'profile/**/*.md'
+    exclude_globs: ['**/index.md']
+    namespace: personal.profile
+    role: canonical
+    auto_recall: true
+
+  - id: daily
+    path_glob: 'daily/**/*.md'
+    exclude_globs: ['**/index.md']
+    namespace: personal.daily
+    role: canonical
+    auto_recall: true
+
+  - id: relationships
+    path_glob: 'relationships/**/*.md'
+    exclude_globs: ['**/index.md']
+    namespace: relationship.shared
+    role: canonical
+    auto_recall: true
+
+  - id: assistant-self
+    path_glob: 'assistant/**/*.md'
+    exclude_globs: ['**/index.md']
+    namespace: assistant.self
+    role: canonical
+    auto_recall: gated
+
+  - id: private-health
+    path_glob: 'private/health/**/*.md'
+    exclude_globs: ['**/index.md']
+    namespace: private.health
+    role: canonical
+    auto_recall: gated
+
+  - id: oc-character
+    path_glob: 'oc/character/**/*.md'
+    exclude_globs: ['**/index.md']
+    namespace: oc.character
+    role: canonical
+    auto_recall: gated

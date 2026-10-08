@@ -1,0 +1,25 @@
+schema_version: 1
+
+validation:
+  require_runtime_models: false
+  require_frozen_thresholds: false
+  require_cooldown: false
+
+namespaces:
+  routing.index: never_index
+  personal.profile: ordinary
+  personal.daily: ordinary
+  relationship.shared: ordinary
+  assistant.self: explicit_context_only
+  private.health: explicit_context_only
+  oc.*: explicit_context_only
+
+models:
+  # The bundled example uses deterministic local backends so the architecture
+  # can be exercised without a model download. Switch to `bge` for real use.
+  backend: hash
+  embedding_name: test-hash-v1
+  dimensions: 64
+  reranker_backend: keyword
+  embedding_path: models/bge-small-zh-v1.5-pytorch
+  reranker_path: models/bge-reranker-base
