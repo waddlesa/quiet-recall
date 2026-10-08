@@ -39,6 +39,29 @@ reranker batch. If the ongoing conversation explains the turn better, the
 ordinary directory is suppressed. Explicit recollection requests bypass that
 suppression and may expose a small vault catalog.
 
+## Problems beyond search
+
+A transcript search engine is a useful archive, but finding a relevant old
+sentence is not the same as recovering the state of an evolving memory.
+QuietRecall is designed around several failures observed in real, long-running
+conversations:
+
+| Pain point | Naive retrieval failure | QuietRecall response |
+| --- | --- | --- |
+| A plan later changed or failed | The early plan can rank above the final outcome | Curate the full arc into one leaf, state the current outcome near the top, and retain dated history below it |
+| One event was discussed many times | Search returns one locally similar fragment and misses the rest | Consolidate related stages into one durable node; retrieve that node as a unit rather than treating every mention as a separate memory |
+| A common word belongs to many memories | Flat top-k retrieval lets weakly related memories crowd the prompt | Let leaves compete inside an explicit hierarchy, give broad memories narrow authored surfaces, and cap the metadata directory |
+| The current conversation already explains the message | Old memories interrupt a coherent discussion | Rank recent assistant context as a competing candidate and suppress the ordinary directory when context wins |
+| A sensitive topic is mentioned casually | Topic matching opens private history without a recollection request | Keep sensitive scopes behind an explicit-recollection gate and a separate capability-scoped search |
+| Canonical text changed after indexing | A stale derived index presents old content as current | Bind reads to the indexed content hash and refuse stale content until derived state is rebuilt |
+
+The first two responses are intentionally a **curation contract**, not a claim
+of automatic temporal reasoning. A human or maintenance agent decides that
+several mentions belong to one memory and records both the current state and
+the history that produced it. A raw transcript index remains a useful fallback
+for evidence and forgotten details; it is complementary to this layer rather
+than a substitute for it.
+
 ## Design choices
 
 - **Curated Markdown is canonical.** SQLite indexes, vectors, segment stores,
